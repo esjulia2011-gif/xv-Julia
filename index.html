@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Julia Espinosa XV</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  background: #0b1c3d;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Pantalla inicial */
+#intro {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(#0b1c3d, #1e3f77);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 10;
+}
+
+#intro button {
+  padding: 15px 30px;
+  border-radius: 30px;
+  border: none;
+  background: #6fb3ff;
+  color: white;
+  font-size: 18px;
+}
+
+/* Secciones */
+.section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: 1s;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h1 {
+  font-size: 50px;
+}
+
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 25px;
+  border-radius: 20px;
+  margin: 20px;
+  max-width: 400px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div id="intro">
+  <h1>Julia Espinosa ✨</h1>
+  <button onclick="entrar()">Abrir invitación</button>
+</div>
+
+<!-- CONTENIDO -->
+<div class="section">
+  <h1>Mis XV 💙</h1>
+  <p id="countdown"></p>
+</div>
+
+<div class="section card">
+  <h2>📍 Cuándo y dónde</h2>
+  <p>7 de agosto 2026</p>
+  <p>Salón del Río Qro Terraza</p>
+</div>
+
+<div class="section card">
+  <h2>🗓 Itinerario</h2>
+  <p>Misa: 5:00 - 6:00 pm</p>
+  <p>Recepción: 6:30 - 7:30 pm</p>
+  <p>Cena: 7:30 - 8:00 pm</p>
+  <p>Baile: después</p>
+</div>
+
+<div class="section card">
+  <h2>💌 Dinámica</h2>
+  <p>No es obligatorio, pero me encantaría que lleves una carta 💙</p>
+</div>
+
+<div class="section card">
+  <h2>👗 Dress code</h2>
+  <p>Formal</p>
+  <p>Colores azules (excepto azul claro)</p>
+</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2022/03/15/audio_c8b7b9c1f1.mp3">
+</audio>
+
+<script>
+function entrar(){
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("music").play();
+}
+
+// Animaciones al hacer scroll
+const sections = document.querySelectorAll('.section');
+
+window.addEventListener('scroll', () => {
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      sec.classList.add('show');
+    }
+  });
+});
+
+// Cuenta regresiva
+var fecha = new Date("Aug 7, 2026").getTime();
+
+setInterval(function() {
+  var ahora = new Date().getTime();
+  var distancia = fecha - ahora;
+
+  var dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+
+  document.getElementById("countdown").innerHTML =
+    dias + " días restantes ✨";
+}, 1000);
+</script>
+
+</body>
+</html>
