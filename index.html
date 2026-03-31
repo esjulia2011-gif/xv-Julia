@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Julia Espinosa XV</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', sans-serif;
+  background: #0b1c3d;
+  color: white;
+  overflow-x: hidden;
+}
+
+/* Fondo estrellas */
+.stars {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.stars span {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  animation: move 10s linear infinite;
+}
+
+@keyframes move {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100vh); }
+}
+
+/* INTRO */
+#intro {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(circle, #1e3f77, #0b1c3d);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 10;
+  text-align: center;
+}
+
+#intro h1 {
+  font-size: 65px;
+  text-shadow: 0 0 20px #6fb3ff;
+}
+
+#intro button {
+  padding: 15px 35px;
+  border-radius: 30px;
+  border: none;
+  background: #6fb3ff;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 0 20px #6fb3ff;
+}
+
+/* Flecha */
+.arrow {
+  margin-top: 20px;
+  font-size: 30px;
+  animation: bounce 1.5s infinite;
+}
+
+@keyframes bounce {
+  0%,100%{transform: translateY(0);}
+  50%{transform: translateY(12px);}
+}
+
+/* Secciones */
+.section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: 1s;
+  padding: 20px;
+}
+
+.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h1 {
+  font-size: 55px;
+}
+
+h2 {
+  font-size: 34px;
+}
+
+p {
+  font-size: 20px;
+}
+
+/* Cards */
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 30px;
+  border-radius: 25px;
+  margin: 20px;
+  max-width: 450px;
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 40px rgba(111,179,255,0.4);
+}
+
+.glow {
+  text-shadow: 0 0 15px #6fb3ff;
+}
+</style>
+</head>
+
+<body>
+
+<div class="stars" id="stars"></div>
+
+<!-- INTRO -->
+<div id="intro">
+  <h1 class="glow">Julia Espinosa ✨</h1>
+  <button onclick="entrar()">Abrir invitación</button>
+</div>
+
+<!-- INICIO -->
+<div class="section">
+  <h1 class="glow">Mis XV 💙</h1>
+  <p id="countdown"></p>
+  <div class="arrow">↓</div>
+</div>
+
+<!-- CUÁNDO Y DÓNDE -->
+<div class="section card">
+  <h2>📍 Cuándo y dónde</h2>
+  <p>7 de agosto 2026</p>
+  <p>Salón del Río Qro Terraza</p>
+</div>
+
+<!-- ITINERARIO -->
+<div class="section card">
+  <h2>🗓 Itinerario</h2>
+  <p>⛪ Misa: 5:00 - 6:00 pm</p>
+  <p>🥂 Recepción: 6:30 - 7:30 pm</p>
+  <p>🍽 Cena: 8:00 - 9:00 pm</p>
+  <p>🥂 Brindis: 9:00 - 9:30 pm</p>
+  <p>💃 Apertura de pista: a partir de 9:30 pm</p>
+  <p>🌙 Despedida: 12:30 am</p>
+</div>
+
+<!-- DINÁMICA -->
+<div class="section card">
+  <h2>💌 Dinámica</h2>
+  <p>No es obligatorio, pero me encantaría que lleves una carta 💙</p>
+  <p style="margin-top:10px;">
+    La lluvia de sobres es la tradición de regalar dinero en efectivo dentro de un sobre el día del evento ✨
+  </p>
+</div>
+
+<!-- DRESS CODE -->
+<div class="section card">
+  <h2>👗 Dress code</h2>
+  <p>Formal</p>
+  <p>Colores azules (excepto azul claro)</p>
+</div>
+
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/audio/2023/03/27/audio_6f8c3c9c56.mp3">
+</audio>
+
+<script>
+// estrellas
+const starsContainer = document.getElementById("stars");
+for(let i=0;i<80;i++){
+  let star = document.createElement("span");
+  star.style.left = Math.random()*100+"%";
+  star.style.top = Math.random()*100+"%";
+  star.style.animationDuration = (5 + Math.random()*10)+"s";
+  starsContainer.appendChild(star);
+}
+
+// intro
+function entrar(){
+  document.getElementById("intro").style.display = "none";
+  document.getElementById("music").play();
+}
+
+// animación scroll
+const sections = document.querySelectorAll('.section');
+window.addEventListener('scroll', () => {
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if(top < window.innerHeight - 100){
+      sec.classList.add('show');
+    }
+  });
+});
+
+// cuenta regresiva
+var fecha = new Date("Aug 7, 2026").getTime();
+
+setInterval(function() {
+  var ahora = new Date().getTime();
+  var distancia = fecha - ahora;
+  var dias = Math.floor(distancia / (1000 * 60 * 60 * 24));
+
+  document.getElementById("countdown").innerHTML =
+    dias + " días restantes ✨";
+}, 1000);
+</script>
+
+</body>
+</html>
